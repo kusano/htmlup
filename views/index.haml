@@ -1,0 +1,8 @@
+%h1
+  HTML Uploader
+%form{:method=>'post'}
+  %input{:name=>'authenticity_token', :value=>session[:csrf], :type=>'hidden'}
+  %div
+    %textarea{:name=>'html', :placeholder=>'<html>...', :rows=>32, :cols=>128}
+  %div
+    %input{:type=>'submit'}
