@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>ちくわ</title>
+    <script>
+window.onload = function()
+{
+	var c = document.getElementById("canvas").getContext("2d");
+	var img = new Image();
+	img.src = "tikuwa.png";
+	var n = 100;
+	
+	var x = new Array(n);
+	var y = new Array(n);
+	var vx = new Array(n);
+	var vy = new Array(n);
+	var m = new Array(n);
+	
+	for (var i=0; i<n; i++)
+	{
+		x[i] = Math.random()*640;
+		y[i] = Math.random()*640;
+		vx[i] = 0;
+		vy[i] = 0;
+		m[i] = Math.random()*32+16;
+	}
+	
+	function draw()
+	{
+		c.fillStyle = "rgba(255, 255, 255, 0.5)";
+		c.fillRect(0, 0, 640, 640);
+		
+		for (var i=0; i<n; i++)
+		for (var j=0; j<n; j++)
+		if (j!=i)
+		{
+			var dx = x[j] - x[i];
+			var dy = y[j] - y[i];
+			var d = dx*dx+dy*dy;
+			if (d>10)
+			{
+				vx[i] += 0.1*m[j]/d*dx/Math.sqrt(d);
+				vy[i] += 0.1*m[j]/d*dy/Math.sqrt(d);
+			}
+		}
+		
+		for (var i=0; i<n; i++)
+		{
+			x[i] += vx[i];
+			y[i] += vy[i];
+		}
+		
+		for (var i=0; i<n; i++)
+			c.drawImage(img, x[i]-m[i]/2, y[i]-m[i]/2, m[i], m[i]);
+		
+		requestAnimationFrame(draw);
+	}
+	
+	requestAnimationFrame(draw);
+};
+    </script>
+  </head>
+  <body>
+    <canvas id="canvas" width="640" height="640">
+    </canvas>
+  </body>
+</html>
