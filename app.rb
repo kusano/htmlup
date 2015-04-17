@@ -45,6 +45,16 @@ get /\A\/([0-9a-f]{32,32})\z/ do |id|
   end
 end
 
+get /\A\/([0-9a-f]{32,32})\/src\z/ do |id|
+  html = Html.find_by(id: id)
+  if html
+    content_type 'text/plain'
+    html.html
+  else
+    ':-('
+  end
+end
+
 after do
   ActiveRecord::Base.connection.close
 end
